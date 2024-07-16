@@ -62,6 +62,23 @@ def insertionSortRecursion(arr:list[int],i)->list[int]:
     insertionSortRecursion(arr,i+1)
 
     return arr
+
+
+def dutchFlagAlgorithm(arr:list[int]):
+    red,white,blue = 0,0,len(arr)-1
+
+    while white <=blue:
+        if arr[white] == 0:
+            arr[red],arr[white] = arr[white],arr[red]
+            white+=1
+            red+=1
+        elif arr[white] == 1:
+            white+=1
+        else:
+            arr[white],arr[blue] = arr[blue],arr[white]
+            blue-=1
+    return arr
+
     
 
     
@@ -81,7 +98,8 @@ def insertionSortRecursion(arr:list[int],i)->list[int]:
 for line in sys.stdin:
     arr = list(map(int,line.split(",")))
     # print(bubbleSort(arr))
-    print(bubbleRecursion(arr,len(arr)))
+    # print(bubbleRecursion(arr,len(arr)))
+    print(dutchFlagAlgorithm(arr))
 
 
 
