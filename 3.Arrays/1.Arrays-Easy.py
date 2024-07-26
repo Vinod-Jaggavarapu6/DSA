@@ -387,6 +387,9 @@ def intersectionOfArraysBF(nums1:List[int],nums2:list[int])->list[int]:
 #LC - 268 : Missing Number
 
 def missingNumberBruteForce(nums):
+    #TimeComplexity:O(nlogn)
+    #SpaceComplexity:O(1)
+
     n = len(nums)
     nums.sort()
 
@@ -394,6 +397,67 @@ def missingNumberBruteForce(nums):
         if i ==n or nums[i] != i:
             return i
 
+def missingNumber1(nums):
+    n = len(nums)
+    sum_of_n = n*(n+1)//2
+
+    sum_of_nums = 0
+    for i in range(n):
+        sum_of_nums += nums[i]
+
+    return sum_of_n - sum_of_nums
+
+def missingNumber2(nums):
+
+    xor1 = 0
+    xor2 = 0
+
+    for i,num in enumerate(nums):
+        xor1 ^= (i+1)
+        xor2 ^= num
+    
+    return xor1^xor2
+
+#LC-485 : Max Consecutive Ones
+
+def maxConsecutiveOnes(nums):
+    #TimeComplexity:O(n)
+    #SpaceComplexity:O(1)
+   
+    max_count = 0
+    count = 0
+
+    for num in nums:
+        if num == 1:
+            count+=1
+        else:
+            max_count = max(max_count,count)
+            count = 0
+
+    return max(max_count,count)
+
+#LC-136 : Single Number
+
+def singleNumber(nums):
+    num_count = {}
+
+    for num in nums:
+        if num in num_count:
+            num_count[num]+=1
+        else:
+            num_count[num] = 1   
+
+    for key in num_count:
+        if num_count[key] == 1:
+            return key
+
+def singleNumberOptimal(nums):
+    xor = 0
+
+    for num in nums:
+        xor ^=num
+    
+    return xor
 
 for line in sys.stdin:
     
@@ -420,14 +484,21 @@ for line in sys.stdin:
     # print(moveZerosOptimal(nums))
 
     # print(missingNumberBruteForce(nums))
+    # print(missingNumber1(nums))
+
+    # print(missingNumber2(nums))
+    # print(maxConsecutiveOnes(nums))
+
+    # print(singleNumber(nums))
+    print(singleNumberOptimal(nums))
 
 # nums1 = [1, 2, 2, 4, 5, 6]
 # nums2 = [2, 3, 5, 7]
 # print(unionOfArrays(nums1,nums2))
 
-nums1 = [1,2,2,1]
-nums2 = [2,2]
+# nums1 = [1,2,2,1]
+# nums2 = [2,2]
 # print(intersectionOfArrays(nums1,nums2))
-print(intersectionOfArraysBF(nums1,nums2))
+# print(intersectionOfArraysBF(nums1,nums2))
 
 sys.stdout.close()
