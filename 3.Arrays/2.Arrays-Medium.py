@@ -871,7 +871,25 @@ def subarraySum2(nums:List[int],k:int)->int:
     return total
 
 def subarraySumOptimal(nums:List[int],k)->int:
-    pass
+    #TC:O(N)
+    #SC:O(N)
+    
+    prefix_map = {0:1}
+    prefix_sum = 0
+    total = 0
+
+    for num in nums:
+        prefix_sum += num
+
+        if prefix_sum - k in prefix_map:
+            total += prefix_map[prefix_sum-k]
+        
+        if prefix_sum in prefix_map:
+            prefix_map[prefix_sum] +=1
+        else:
+            prefix_map[prefix_sum] =1
+
+    return total
 
 
 # arr = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]
@@ -923,7 +941,8 @@ for line in sys.stdin:
     # print(longestConsecutiveBF(arr))
     # print(longestConsecutiveOptimal(arr))
     # print(subarraySum(arr,k))
-    print(subarraySum2(arr,k))
+    # print(subarraySum2(arr,k))
+    print(subarraySumOptimal(arr,k))
     pass
 
 sys.stdout.close()
