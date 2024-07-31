@@ -27,14 +27,14 @@ def nCrV2(n:int,r:int)->int:
         res /= (i+1)
     return int(res)
 
-
+#LC: 118. Pascal's Triangle
 def pascalTriangleV1(row:int,col:int)->int:
-
     return nCrV2(row-1,col-1)
 
 
-
+#LC: 118. Pascal's Triangle
 def pascalTriangle(numRows:int)->List[List[int]]:
+
     output = [[1 for j in range(i) ] for i in range(1,numRows+1)]
 
     for i in range(2,numRows):
@@ -50,6 +50,7 @@ def pascalTriangle(numRows:int)->List[List[int]]:
 
     return output
 
+#LC: 118. Pascal's Triangle
 def pascalNthRowV1(row:int)->List[int]:
     res = []
     for col in range(row):
@@ -57,6 +58,7 @@ def pascalNthRowV1(row:int)->List[int]:
         res.append(ncr)
     return res
 
+#LC: 118. Pascal's Triangle
 def pascalNthRowV2(rows:int)->List[int]:
     nth_row = []
     ans = 1
@@ -69,6 +71,7 @@ def pascalNthRowV2(rows:int)->List[int]:
     
     return nth_row
 
+#LC: 118. Pascal's Triangle
 def generatePascalTriangle(numRows:int)->List[List[int]]:
     res = []
     for row in range(1,numRows+1):
@@ -76,6 +79,7 @@ def generatePascalTriangle(numRows:int)->List[List[int]]:
 
     return res
 
+#LC: 229. Majority Element II
 def majorityElement(nums:List[int])->List[int]:
     res = []
     n = len(nums)
@@ -92,7 +96,7 @@ def majorityElement(nums:List[int])->List[int]:
 
     return res
 
-
+#LC: 229. Majority Element II
 def majorityElementHashing(nums:List[int])->List[int]:
     res = []
     count_map = {}
@@ -109,6 +113,8 @@ def majorityElementHashing(nums:List[int])->List[int]:
             res.append(num)
     
     return res
+
+#LC: 229. Majority Element II
 
 def majorityElementHashingV2(nums:List[int])->List[int]:
     res = []
@@ -127,6 +133,8 @@ def majorityElementHashingV2(nums:List[int])->List[int]:
 
     return res
     
+#LC: 229. Majority Element II
+
 def majorityElementOptimal(nums:List[int])->List[int]:
     
     min_count = math.floor(len(nums)/3)
@@ -166,11 +174,68 @@ def majorityElementOptimal(nums:List[int])->List[int]:
     
     return res
 
+#LC: 15 3Sum
 
+def threeSum(nums:List[int])->List[List[int]]:
+    #TC:O(N^3)
+    triplets = set()
+    n = len(nums)
+    for i in range(n):
+        for j in range(i+1,n):
+            for k in range(j+1,n):
+                if nums[i]+nums[j]+nums[k] == 0:
+                    print(i,j,k)
+                    sorted_triplet = tuple(sorted([i,j,k]))
+                    triplets.add(sorted_triplet)
 
+    return [list(item) for item in triplets]
 
+def threeSumHashing(nums:List[int])->List[List[int]]:
+    triplets = set()
+    n = len(nums)
 
+    for i in range(n):
+        hash_map = {}
+        for j in range(i+1,n):
+            k_val = -(nums[i]+nums[j])
 
+            if k_val in hash_map:
+                triplet = tuple(sorted([i,j,hash_map[k_val]]))
+                triplets.add(triplet)
+
+            hash_map[nums[j]] = j
+                
+
+    return [list(triplet) for triplet in triplets]
+
+def threeSum2Pointer(nums:List[int])->List[List[int]]:
+    n = len(nums)
+    triplets = []
+
+    nums.sort()
+
+    for i in range(n):
+        if i == 0 or nums[i] != nums[i-1]:
+            j = i+1
+            k = n-1
+
+            while j < k:
+                sum = nums[i]+nums[j]+nums[k]
+
+                if  sum == 0:
+                    triplets.append([nums[i],nums[j],nums[k]])
+                    j+=1
+                    k-=1
+                    while j<k and nums[j] == nums[j-1]:
+                        j+=1
+                    while j<k and nums[k] == nums[k+1]:
+                        k-=1
+                elif sum < 0:
+                    j+=1
+                elif sum > 0:
+                    k-=1
+
+    return triplets
 
 for line in sys.stdin:
     arr = list(map(int,line.split(',')))
@@ -186,6 +251,9 @@ for line in sys.stdin:
     # print(majorityElement(arr))
     # print(majorityElementHashing(arr))
     # print(majorityElementHashingV2(arr))
-    print(majorityElementOptimal(arr))
+    # print(majorityElementOptimal(arr))
+    # print(threeSum(arr))
+    # print(threeSumHashing(arr))
+    print(threeSum2Pointer(arr))
 
 sys.stdout.close()
